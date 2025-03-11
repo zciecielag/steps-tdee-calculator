@@ -15,15 +15,15 @@ function calculate(event) {
 
     let bmr = calculateBMR(gender, weight, height, age);
     let stepsBurn = calculateStepCalorieBurn(paceToMET, steps, time, weight);
-    let tdee = (bmr + stepsBurn).toFixed(2);
+    let tdee = (bmr + stepsBurn);
 
     if (tdee < 1200) {
         tdee = 1200;
     }
 
-    bmrResultElement.textContent = bmr;
-    stepCalorieBurnResultElement.textContent = stepsBurn;
-    tdeeResultElement.textContent = tdee;
+    bmrResultElement.textContent = bmr.toFixed(2);
+    stepCalorieBurnResultElement.textContent = stepsBurn.toFixed(2);
+    tdeeResultElement.textContent = tdee.toFixed(2);
 }
 
 function calculateBMR(gender, weight, height, age) {

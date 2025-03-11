@@ -2,16 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/homePage.css}" rel="stylesheet" />
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/actions.js}"></script>
     <title>Steps TDEE Calculator</title>
 </head>
 <body>
+    <div class="navigation">
+        <button id="goToLoginButton" th:onclick="|window.location.href='/login'|">Login</button><br>
+        <button id="goToRegisterButton" th:onclick="|window.location.href='/register'|">Register</button><br>
+    </div>
 
     <div id="description">
-        <h2>TDEE Calculator based on step count</h2>
+        <h2>TDEE tracker based on step count</h2>
         <br>
-        <p>This is a TDEE (Total Daily Energy Expenditure) calculator.<br>
+        <p>This is a TDEE (Total Daily Energy Expenditure) calculator and tracker.<br>
             It proposes an alternative way of using activity levels in the calculation.<br>
             Instead of using vaguely defined activity categories such as Sedentary, Active etc., it attemps to provide an estimate based on your daily step count and pace.<br>
             <br>
@@ -58,6 +62,7 @@
         Your BMR (the calories you burn at rest): <p id="bmrResult">0</p><br>
         Your average calories burned at your step count and pace: <p id="stepResult">0</p><br>
         Your TDEE (the total calories you burn daily): <p id="tdeeResult">0</p><br>
+        If you want to save this data and track your TDEE over time, please create an account: <button id="goToRegisterButton1" th:onclick="|window.location.href='/register'|">Register</button><br>
     </div>
 
 </body>
