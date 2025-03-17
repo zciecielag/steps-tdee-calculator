@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/actions.js}"></script>
+    <title>Steps TDEE Calculator</title>
+</head>
+<body>
+    <div class="navigation">
+        <button id="goToLoginButton" th:onclick="|window.location.href='/loginForm'|">Login</button><br>
+        <button id="goToRegisterButton" th:onclick="|window.location.href='/registerForm'|">Register</button><br>
+    </div>
+
+    <div id="description">
+        <h2>TDEE tracker based on step count</h2>
+        <br>
+        <p>This is a TDEE (Total Daily Energy Expenditure) calculator and tracker.<br>
+            It proposes an alternative way of using activity levels in the calculation.<br>
+            Instead of using vaguely defined activity categories such as Sedentary, Active etc., it attemps to provide an estimate based on your daily step count and pace.<br>
+            <br>
+            The equation is simple:<br>
+            Your TDEE = Your BMR (Basal Metabolic Rate - your energy at rest) + the calories burned from your average daily step count.<br>
+            <br>
+            WARNING! This calculator and equation are NOT approved by any medical professional and should ONLY be used as a very general reference.<br>
+            Please remember that your actual TDEE will very likely differ from the one suggested by this calculator.<br>
+            <br>
+            Please also note that this calculator will not suggest calorie intakes of less than 1200 calories.<br>
+            <br>
+        </p>
+    </div>
+
+    <div id="calculator">
+        <form name="calculateForm" onsubmit="calculate(event)">
+            Your age: <input type="number" id="age" name="age" required>
+            <br>
+            Your gender assigned at birth:
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <br>
+            Your weight (kg): <input type="number" id="weight" name="weight" step="any" required>
+            <br>
+            Your height (cm): <input type="number" id="height" name="height" step="any" required>
+            <br>
+            Your average daily steps: <input type="number" id="steps" name="steps" required>
+            <br>
+            Your average pace (km/h): <select name="pace" id="pace">
+                <option value="3.2" selected>3.2 km/h</option>
+                <option value="4.8">4.8 km/h</option>
+                <option value="6.4">6.4 km/h</option>
+                <option value="8.0">8.0 km/h</option>
+            </select>
+            <br>
+            The average time (minutes) it takes you to reach this step count: <input type="number" id="time" name="time" step="any" required>
+            <input type="submit" value="Calculate">
+        </form>
+    </div>
+
+    <div id="results">
+        Your BMR (the calories you burn at rest): <p id="bmrResult">0</p><br>
+        Your average calories burned at your step count and pace: <p id="stepResult">0</p><br>
+        Your TDEE (the total calories you burn daily): <p id="tdeeResult">0</p><br>
+        If you want to save this data and track your TDEE over time, please create an account: <button id="goToRegisterButton1" th:onclick="|window.location.href='/register'|">Register</button><br>
+    </div>
+
+</body>
+</html>
