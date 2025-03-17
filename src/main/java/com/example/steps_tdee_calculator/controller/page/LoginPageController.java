@@ -1,47 +1,45 @@
 package com.example.steps_tdee_calculator.controller.page;
 
-import com.example.steps_tdee_calculator.entity.user.User;
-import com.example.steps_tdee_calculator.repository.UserRepository;
-import com.example.steps_tdee_calculator.service.UserService;
+import com.example.steps_tdee_calculator.entity.user.AppUser;
+import com.example.steps_tdee_calculator.repository.AppUserRepository;
+import com.example.steps_tdee_calculator.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
-@SessionAttributes("user")
 public class LoginPageController {
 
     @Autowired
-    private UserService userService;
+    private AppUserService userService;
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository appUserRepository;
 
     @GetMapping("/loginForm")
     public String loginForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new AppUser());
         return "loginPage";
     }
 
-    @PostMapping("/loginForm")
-    public String loginSubmit(@ModelAttribute User user, Model model) {
-        model.addAttribute("user", user);
-        if (userService.verifyUser(user.getUsername(), user.getPassword())) {
-            model.addAttribute("success", true);
-            return "loginPage";
-        } else {
-            model.addAttribute("error", "Wrong login and/or password.");
-            return "loginPage";
-        }
-    }
+//    @PostMapping("/loginForm")
+//    public String loginSubmit(@ModelAttribute AppUser appUser, Model model) {
+//        model.addAttribute("user", appUser);
+//        if (userService.verifyUser(appUser.getUsername(), appUser.getPassword())) {
+//            model.addAttribute("success", true);
+//            return "loginPage";
+//        } else {
+//            model.addAttribute("error", "Wrong login and/or password.");
+//            return "loginPage";
+//        }
+//    }
 
     @ModelAttribute("user")
-    public User user() {
-        return new User();
+    public AppUser user() {
+        return new AppUser();
     }
 
 }

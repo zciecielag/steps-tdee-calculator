@@ -2,6 +2,7 @@ package com.example.steps_tdee_calculator.entity.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -10,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,12 +23,15 @@ public class User {
     private String surname;
     @Column(nullable = false, length = 100)
     private String password;
+    @ColumnDefault("'USER'")
+    private String role;
 
-    private User(UserBuilder builder) {
+    private AppUser(UserBuilder builder) {
         this.username = builder.username;
         this.name = builder.name;
         this.surname = builder.surname;
         this.password = builder.password;
+        this.role = builder.role;
     }
 
     @AllArgsConstructor
@@ -37,6 +41,7 @@ public class User {
         private String name;
         private String surname;
         private String password;
+        private String role = "USER";
 
         public UserBuilder setUsername(String username) {
             this.username = username;
@@ -58,8 +63,13 @@ public class User {
             return this;
         }
 
-        public User build() {
-            return new User(this);
+        public UserBuilder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public AppUser build() {
+            return new AppUser(this);
         }
     }
 }

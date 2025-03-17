@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="registerForm">
-    <h2>Register a new user:</h2>
+    <h2>Register a new appUser:</h2>
     <br>
     <form th:action="@{/registerForm}" th:object="${newUser}" method="post">
         Name: <input type="text" id="name" name="name" th:field="*{name}" required>
