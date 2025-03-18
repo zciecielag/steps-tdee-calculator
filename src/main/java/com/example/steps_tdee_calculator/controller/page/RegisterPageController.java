@@ -4,6 +4,7 @@ import com.example.steps_tdee_calculator.dto.AppUserDto;
 import com.example.steps_tdee_calculator.exception.UsernameExistsException;
 import com.example.steps_tdee_calculator.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ public class RegisterPageController {
     @Autowired
     private AppUserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/registerForm")
     public String registerForm(Model model) {
         model.addAttribute("newUser", new AppUserDto());
@@ -26,6 +30,7 @@ public class RegisterPageController {
     public String registerSubmit(@ModelAttribute AppUserDto newUser, Model model) {
         model.addAttribute("newUser", new AppUserDto());
         try {
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userService.saveUser(newUser);
             model.addAttribute("success", true);
         } catch (UsernameExistsException usernameExistsException) {
