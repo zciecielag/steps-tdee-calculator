@@ -40,20 +40,30 @@ public class AppUserService {
         }
         return AppUserDto.builder()
                 .username(user.getUsername())
-                .name(user.getName())
-                .surname(user.getSurname())
-                .password(user.getPassword()).build();
+                .password(user.getPassword())
+                .currentTdee(user.getCurrentTdee())
+                .currentBmr(user.getCurrentBmr())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .age(user.getAge())
+                .gender(user.isGender())
+                .role(user.getRole()).build();
     }
 
     public List<AppUserDto> getAllUsers() {
         var users = appUserRepository.findAll();
         List<AppUserDto> result = new ArrayList<>();
-        for (AppUser appUser : users) {
+        for (AppUser user : users) {
             result.add(AppUserDto.builder()
-                    .username(appUser.getUsername())
-                    .name(appUser.getName())
-                    .surname(appUser.getSurname())
-                    .password(appUser.getPassword()).build());
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .currentTdee(user.getCurrentTdee())
+                    .currentBmr(user.getCurrentBmr())
+                    .height(user.getHeight())
+                    .weight(user.getWeight())
+                    .age(user.getAge())
+                    .gender(user.isGender())
+                    .role(user.getRole()).build());
         }
         return result;
     }
@@ -64,8 +74,6 @@ public class AppUserService {
         } else {
             AppUser appUser = new AppUser.UserBuilder()
                     .setUsername(appUserDto.getUsername())
-                    .setName(appUserDto.getName())
-                    .setSurname(appUserDto.getSurname())
                     .setPassword(appUserDto.getPassword())
                     .build();
             appUserRepository.save(appUser);

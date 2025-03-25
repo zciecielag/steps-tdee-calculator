@@ -7,26 +7,22 @@
     <title>Register</title>
 </head>
 <body>
-<div class="registerForm">
-    <h2>Register a new appUser:</h2>
+<div class="loginForm">
+    <h2>Create an account:</h2>
     <br>
     <form th:action="@{/registerForm}" th:object="${newUser}" method="post">
-        Name: <input type="text" id="name" name="name" th:field="*{name}" required>
-        <br>
-        Surname: <input type="text" id="surname" name="surname" th:field="*{surname}" required>
-        <br>
         Username: <input type="text" id="username" name="username" th:field="*{username}" required>
         <br>
         Password (5 characters minimum): <input type="password" id="password" name="password" th:field="*{password}" minlength="5" required>
         <br>
         <input type="submit" value="Register">
-        <br>
-        <br>
-        <p th:if="${success}">Registered successfully!</p>
-        <p th:if="${error}" th:text="${error}"></p>
-        <br>
-        <button type="button" th:onclick="|window.location.href='/home'|">Go back</button>
     </form>
+    <br>
+    <br>
+    <p th:if="${successText}">Registered successfully!</p>
+    <p th:if="${errorText}" th:text="${errorText}"></p>
+    <br>
+    <button type="button" th:onclick="|window.location.href='/home'|">Go back</button>
 </div>
 </body>
 </html>

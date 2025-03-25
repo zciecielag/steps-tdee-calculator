@@ -9,8 +9,12 @@ import lombok.*;
 @Builder
 public class AppUserDto {
     private String username;
-    private String name;
-    private String surname;
     private String password;
+    private double currentTdee;
+    private double currentBmr;
+    private double height;
+    private double weight;
+    private int age;
+    private boolean gender;
     private String role;
 }

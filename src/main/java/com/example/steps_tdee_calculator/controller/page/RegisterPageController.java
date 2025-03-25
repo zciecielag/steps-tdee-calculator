@@ -32,9 +32,9 @@ public class RegisterPageController {
         try {
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userService.saveUser(newUser);
-            model.addAttribute("success", true);
+            model.addAttribute("successText", true);
         } catch (UsernameExistsException usernameExistsException) {
-            model.addAttribute("error", "A user with this username already exists.");
+            model.addAttribute("errorText", "A user with this username already exists.");
         }
         return "registerPage";
     }
