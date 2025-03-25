@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginPageController {
@@ -20,22 +20,18 @@ public class LoginPageController {
     private AppUserRepository appUserRepository;
 
     @GetMapping("/loginForm")
-    public String loginForm(Model model) {
+    public String loginForm(Model model, @RequestParam(value="success", required = false) String success) {
+        if (success != null) {
+            if (success.equals("true")) {
+                model.addAttribute("successText", true);
+            }
+            if (success.equals("false")) {
+                model.addAttribute("errorText", "Wrong login and/or password.");
+            }
+        }
         model.addAttribute("user", new AppUser());
         return "loginPage";
     }
-
-//    @PostMapping("/loginForm")
-//    public String loginSubmit(@ModelAttribute AppUser appUser, Model model) {
-//        model.addAttribute("user", appUser);
-//        if (userService.verifyUser(appUser.getUsername(), appUser.getPassword())) {
-//            model.addAttribute("success", true);
-//            return "loginPage";
-//        } else {
-//            model.addAttribute("error", "Wrong login and/or password.");
-//            return "loginPage";
-//        }
-//    }
 
     @ModelAttribute("user")
     public AppUser user() {
