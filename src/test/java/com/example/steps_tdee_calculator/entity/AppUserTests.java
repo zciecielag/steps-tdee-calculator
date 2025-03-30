@@ -8,7 +8,7 @@ import org.springframework.test.annotation.Rollback;
 
 @DataJpaTest
 @Rollback(value = true)
-public class UserTests {
+public class AppUserTests {
 
     @Autowired
     private AppUserRepository appUserRepository;

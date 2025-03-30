@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" />
+    <title>User Home Page</title>
+</head>
+<body>
+    Welcome, <span th:text="${username}"></span>!<br>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Log out</button>
+    </form>
+</body>
+</html>

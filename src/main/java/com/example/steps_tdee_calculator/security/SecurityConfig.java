@@ -7,11 +7,15 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+
+import java.util.EnumSet;
 
 @Configuration
 @EnableWebSecurity
@@ -20,22 +24,49 @@ public class SecurityConfig {
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry->{
-                registry.requestMatchers("/", "/home", "/loginForm", "/registerForm").permitAll();
+                registry.requestMatchers("/", "/home", "/loginForm",
+                        "/registerForm", "/forbidden",
+                        "/sessionInvalid", "/sessionExpired").permitAll();
                 registry.requestMatchers("/api/**").hasRole("ADMIN");
-                registry.anyRequest().authenticated();
+                registry.requestMatchers("/userHomePage").authenticated();
                 })
                 .formLogin(form -> form
                         .loginPage("/loginForm")
-                        .defaultSuccessUrl("/loginForm?success=true", true)
                         .failureUrl("/loginForm?success=false")
+                        .successHandler(authenticationSuccessHandler)
                         .permitAll()
                 )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/homePage")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .permitAll()
+                )
+                .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                        httpSecuritySessionManagementConfigurer
+                                .sessionFixation().migrateSession()
+                                .invalidSessionUrl("/sessionInvalid")
+                                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                                .maximumSessions(1)
+                                .expiredUrl("/sessionExpired")
+                )
+                .exceptionHandling(handling -> handling
+                        .accessDeniedPage("/forbidden")
+                )
                 .build();
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
     @Bean
