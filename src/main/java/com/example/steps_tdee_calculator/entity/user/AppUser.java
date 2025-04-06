@@ -29,8 +29,8 @@ public class AppUser {
     private double weight;
     @Column
     private int age;
-    @Column
-    private boolean gender;
+    @ColumnDefault("'F'")
+    private String gender;
     @ColumnDefault("'USER'")
     private String role;
 
@@ -56,7 +56,7 @@ public class AppUser {
         private double height;
         private double weight;
         private int age;
-        private boolean gender;
+        private String gender;
         private String role = "USER";
 
         public UserBuilder setUsername(String username) {
@@ -94,7 +94,7 @@ public class AppUser {
             return this;
         }
 
-        public UserBuilder setGender(boolean gender) {
+        public UserBuilder setGender(String gender) {
             this.gender = gender;
             return this;
         }

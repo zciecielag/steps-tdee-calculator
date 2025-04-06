@@ -46,7 +46,7 @@ public class AppUserService {
                 .height(user.getHeight())
                 .weight(user.getWeight())
                 .age(user.getAge())
-                .gender(user.isGender())
+                .gender(user.getGender())
                 .role(user.getRole()).build();
     }
 
@@ -62,7 +62,7 @@ public class AppUserService {
                     .height(user.getHeight())
                     .weight(user.getWeight())
                     .age(user.getAge())
-                    .gender(user.isGender())
+                    .gender(user.getGender())
                     .role(user.getRole()).build());
         }
         return result;

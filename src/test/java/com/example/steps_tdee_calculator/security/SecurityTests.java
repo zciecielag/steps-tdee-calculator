@@ -19,10 +19,9 @@ public class SecurityTests {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
-    public void testAdminAccess() throws Exception {
-        mockMvc.perform(post("/api"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/sessionInvalid"));
+    @WithMockUser(username = "user", roles = {"USER"})
+    public void testIfDeniedUserAccessToApi() throws Exception {
+        mockMvc.perform(post("/api/users/getAll"))
+                .andExpect(status().isForbidden());
     }
 }
