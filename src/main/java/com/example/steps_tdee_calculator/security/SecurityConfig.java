@@ -15,8 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
-import java.util.EnumSet;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -30,13 +28,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .authorizeHttpRequests(registry->{
-                registry.requestMatchers("/", "/home", "/loginForm",
-                        "/registerForm", "/forbidden",
-                        "/sessionInvalid", "/sessionExpired").permitAll();
-                registry.requestMatchers("/api/**").hasRole("ADMIN");
-                registry.requestMatchers("/userHomePage").authenticated();
-                })
+                .authorizeHttpRequests((auth)->
+                auth
+                    .requestMatchers("/", "/home", "/loginForm",
+                            "/registerForm", "/forbidden", "/sessionExpired",
+                            "/test-auth").permitAll()
+                    .requestMatchers("/api/**", "/api/***").hasRole("ADMIN")
+                    .requestMatchers("/userHomePage").authenticated()
+                )
                 .formLogin(form -> form
                         .loginPage("/loginForm")
                         .failureUrl("/loginForm?success=false")
@@ -53,7 +52,6 @@ public class SecurityConfig {
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
                         httpSecuritySessionManagementConfigurer
                                 .sessionFixation().migrateSession()
-                                .invalidSessionUrl("/sessionInvalid")
                                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                                 .maximumSessions(1)
                                 .expiredUrl("/sessionExpired")

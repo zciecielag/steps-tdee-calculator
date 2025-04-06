@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.security.Principal;
 
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -35,7 +34,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                 .setHeight(foundUser.getHeight())
                 .setWeight(foundUser.getWeight())
                 .setAge(foundUser.getAge())
-                .setGender(foundUser.isGender())
+                .setGender(foundUser.getGender())
+                .setRole(foundUser.getRole())
                 .build();
         session.setAttribute("user", sessionUser);
         response.sendRedirect("/userHomePage" );

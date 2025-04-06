@@ -13,6 +13,12 @@ public class UserHomePageController {
     public String userHomePage(Model model, HttpSession session) {
         System.out.println(session.getAttribute("user"));
         model.addAttribute("username", ((AppUser) session.getAttribute("user")).getUsername());
+        model.addAttribute("currentTdee", ((AppUser) session.getAttribute("user")).getCurrentTdee());
+        model.addAttribute("currentBmr", ((AppUser) session.getAttribute("user")).getCurrentBmr());
+        model.addAttribute("height", ((AppUser) session.getAttribute("user")).getHeight());
+        model.addAttribute("weight", ((AppUser) session.getAttribute("user")).getWeight());
+        model.addAttribute("age", ((AppUser) session.getAttribute("user")).getAge());
+        model.addAttribute("gender", ((AppUser) session.getAttribute("user")).getGender());
         return "userHomePage";
     }
 }

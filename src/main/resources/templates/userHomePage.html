@@ -7,6 +7,13 @@
 </head>
 <body>
     Welcome, <span th:text="${username}"></span>!<br>
+    Your stats:<br>
+    Your current TDEE: <span th:text="${currentTdee}"></span><br>
+    Your current BMR: <span th:text="${currentBmr}"></span><br>
+    Your height: <span th:text="${height}"></span><br>
+    Your current weight: <span th:text="${weight}"></span><br>
+    Your age: <span th:text="${age}"></span><br>
+    Your gender: <span th:text="${gender}"></span><br>
     <form th:action="@{/logout}" method="post">
         <button type="submit">Log out</button>
     </form>
