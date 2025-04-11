@@ -30,11 +30,9 @@ public class SecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests((auth)->
                 auth
-                    .requestMatchers("/", "/home", "/loginForm",
-                            "/registerForm", "/forbidden", "/sessionExpired",
-                            "/test-auth").permitAll()
-                    .requestMatchers("/api/**", "/api/***").hasRole("ADMIN")
+                    .requestMatchers("/api/**").hasRole("ADMIN")
                     .requestMatchers("/userHomePage").authenticated()
+                    .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/loginForm")
@@ -56,9 +54,9 @@ public class SecurityConfig {
                                 .maximumSessions(1)
                                 .expiredUrl("/sessionExpired")
                 )
-                .exceptionHandling(handling -> handling
-                        .accessDeniedPage("/forbidden")
-                )
+//                .exceptionHandling(handling -> handling
+//                        .accessDeniedPage("/error")
+//                )
                 .build();
     }
 
