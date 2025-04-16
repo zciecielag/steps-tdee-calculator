@@ -11,13 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppUserDto {
+public class AppUserRegisterDto {
     private String username;
     private String password;
-    private List<Tdee> tdeeList;
+    private double currentTdee;
     private double bmr;
     private double height;
-    private List<Weight> weightList;
+    private double currentWeight;
     private int age;
     private String gender;
     private String role;

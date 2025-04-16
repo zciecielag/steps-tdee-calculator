@@ -42,7 +42,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/homePage")
+                        .logoutSuccessUrl("/home")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll()
@@ -54,9 +54,6 @@ public class SecurityConfig {
                                 .maximumSessions(1)
                                 .expiredUrl("/sessionExpired")
                 )
-//                .exceptionHandling(handling -> handling
-//                        .accessDeniedPage("/error")
-//                )
                 .build();
     }
 

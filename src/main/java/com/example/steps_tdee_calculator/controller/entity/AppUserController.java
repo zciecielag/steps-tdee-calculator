@@ -1,6 +1,7 @@
 package com.example.steps_tdee_calculator.controller.entity;
 
 import com.example.steps_tdee_calculator.dto.AppUserDto;
+import com.example.steps_tdee_calculator.dto.AppUserRegisterDto;
 import com.example.steps_tdee_calculator.exception.UserDoesNotExistException;
 import com.example.steps_tdee_calculator.exception.UsernameExistsException;
 import com.example.steps_tdee_calculator.service.AppUserService;
@@ -24,7 +25,7 @@ public class AppUserController {
 
     @PostMapping("/addUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveUser(@RequestBody AppUserDto appUserDto) throws UsernameExistsException {
+    public void saveUser(@RequestBody AppUserRegisterDto appUserDto) throws UsernameExistsException {
         userService.saveUser(appUserDto);
     }
     @GetMapping("/getById/{id}")
