@@ -1,7 +1,7 @@
 package com.example.steps_tdee_calculator.security;
 
 
-import com.example.steps_tdee_calculator.entity.user.AppUser;
+import com.example.steps_tdee_calculator.entity.AppUser;
 import com.example.steps_tdee_calculator.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

@@ -1,8 +1,10 @@
-package com.example.steps_tdee_calculator.entity.user;
+package com.example.steps_tdee_calculator.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,14 +21,14 @@ public class AppUser {
     private String username;
     @Column(nullable = false, length = 100)
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Tdee> tdeeList;
     @Column
-    private double currentTdee;
-    @Column
-    private double currentBmr;
+    private double bmr;
     @Column
     private double height;
-    @Column
-    private double weight;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Weight> weightList;
     @Column
     private int age;
     @ColumnDefault("'F'")
@@ -37,10 +39,10 @@ public class AppUser {
     private AppUser(UserBuilder builder) {
         this.username = builder.username;
         this.password = builder.password;
-        this.currentTdee = builder.currentTdee;
-        this.currentBmr = builder.currentBmr;
+        this.tdeeList = builder.tdeeList;
+        this.bmr = builder.bmr;
         this.height = builder.height;
-        this.weight = builder.weight;
+        this.weightList = builder.weightList;
         this.age = builder.age;
         this.gender = builder.gender;
         this.role = builder.role;
@@ -51,10 +53,10 @@ public class AppUser {
     public static class UserBuilder {
         private String username;
         private String password;
-        private double currentTdee;
-        private double currentBmr;
+        private List<Tdee> tdeeList;
+        private double bmr;
         private double height;
-        private double weight;
+        private List<Weight> weightList;
         private int age;
         private String gender;
         private String role = "USER";
@@ -69,13 +71,13 @@ public class AppUser {
             return this;
         }
 
-        public UserBuilder setCurrentTdee(double currentTdee) {
-            this.currentTdee = currentTdee;
+        public UserBuilder setTdeeList(List<Tdee> tdeeList) {
+            this.tdeeList = tdeeList;
             return this;
         }
 
-        public UserBuilder setCurrentBmr(double currentBmr) {
-            this.currentBmr = currentBmr;
+        public UserBuilder setBmr(double bmr) {
+            this.bmr = bmr;
             return this;
         }
 
@@ -84,8 +86,8 @@ public class AppUser {
             return this;
         }
 
-        public UserBuilder setWeight(double weight) {
-            this.weight = weight;
+        public UserBuilder setWeightList(List<Weight> weightList) {
+            this.weightList = weightList;
             return this;
         }
 

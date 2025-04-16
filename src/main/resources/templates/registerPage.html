@@ -15,6 +15,22 @@
         <br>
         Password (5 characters minimum): <input type="password" id="password" name="password" th:field="*{password}" minlength="5" required>
         <br>
+        Current TDEE: <input type="text" id="tdee" name="tdee" th:field="*{currentTdee}" pattern="\d*" required>
+        <br>
+        Current BMR: <input type="text" id="bmr" name="bmr" th:field="*{bmr}" pattern="\d*" required>
+        <br>
+        Height [cm]: <input type="text" id="height" name="height" th:field="*{height}" pattern="\d*" required>
+        <br>
+        Weight [kg]: <input type="text" id="weight" name="weight" th:field="*{currentWeight}" pattern="\d*" required>
+        <br>
+        Age: <input type="text" id="age" name="age" th:field="*{age}" pattern="\d*" required>
+        <br>
+        Gender:
+        <input type="radio" id="female" name="gender" th:field="*{gender}" value="F">
+        <label for="female">Female&nbsp;</label>
+        <input type="radio" id="male" name="gender" th:field="*{gender}" value="M">
+        <label for="male">Male&nbsp;</label>
+        <br>
         <input type="submit" value="Register">
     </form>
     <br>

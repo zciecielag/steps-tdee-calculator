@@ -1,6 +1,7 @@
 package com.example.steps_tdee_calculator.controller.page;
 
 import com.example.steps_tdee_calculator.dto.AppUserDto;
+import com.example.steps_tdee_calculator.dto.AppUserRegisterDto;
 import com.example.steps_tdee_calculator.exception.UsernameExistsException;
 import com.example.steps_tdee_calculator.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,13 @@ public class RegisterPageController {
 
     @GetMapping("/registerForm")
     public String registerForm(Model model) {
-        model.addAttribute("newUser", new AppUserDto());
+        model.addAttribute("newUser", new AppUserRegisterDto());
         return "registerPage";
     }
 
     @PostMapping("/registerForm")
-    public String registerSubmit(@ModelAttribute AppUserDto newUser, Model model) {
-        model.addAttribute("newUser", new AppUserDto());
+    public String registerSubmit(@ModelAttribute AppUserRegisterDto newUser, Model model) {
+        model.addAttribute("newUser", new AppUserRegisterDto());
         try {
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userService.saveUser(newUser);
