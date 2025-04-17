@@ -1,7 +1,5 @@
 package com.example.steps_tdee_calculator.dto;
 
-import com.example.steps_tdee_calculator.entity.Tdee;
-import com.example.steps_tdee_calculator.entity.Weight;
 import lombok.*;
 
 import java.util.List;
@@ -13,11 +11,10 @@ import java.util.List;
 @Builder
 public class AppUserDto {
     private String username;
-    private String password;
-    private List<Tdee> tdeeList;
+    private List<TdeeDto> tdeeList;
     private double bmr;
     private double height;
-    private List<Weight> weightList;
+    private List<WeightDto> weightList;
     private int age;
     private String gender;
     private String role;
