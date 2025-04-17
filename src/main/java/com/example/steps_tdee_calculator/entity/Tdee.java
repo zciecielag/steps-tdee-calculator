@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = {"user"})
+@EqualsAndHashCode(exclude = {"user"})
 @NoArgsConstructor
 @Entity
 @Table(name = "tdees")

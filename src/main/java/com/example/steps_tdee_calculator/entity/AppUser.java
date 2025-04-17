@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = {"tdeeList", "weightList"})
+@EqualsAndHashCode(exclude = {"tdeeList", "weightList"})
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
@@ -22,13 +23,13 @@ public class AppUser {
     @Column(nullable = false, length = 100)
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Tdee> tdeeList;
+    private List<Tdee> tdeeList = new ArrayList<>();
     @Column
     private double bmr;
     @Column
     private double height;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Weight> weightList;
+    private List<Weight> weightList = new ArrayList<>();
     @Column
     private int age;
     @ColumnDefault("'F'")
