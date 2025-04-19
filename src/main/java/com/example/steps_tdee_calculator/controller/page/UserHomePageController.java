@@ -1,7 +1,10 @@
 package com.example.steps_tdee_calculator.controller.page;
 
 import com.example.steps_tdee_calculator.dto.SessionAppUserDto;
+import com.example.steps_tdee_calculator.dto.TdeeDto;
+import com.example.steps_tdee_calculator.dto.WeightDto;
 import com.example.steps_tdee_calculator.repository.AppUserRepository;
+import com.example.steps_tdee_calculator.service.AppUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,19 +26,33 @@ public class UserHomePageController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
-            SessionAppUserDto appUser = appUserRepository.findUserDetailsByUsername(username);
-
-            if (appUser != null) {
-                session.setAttribute("user", appUser);
-
-                model.addAttribute("username", appUser.getUsername());
-                //model.addAttribute("tdee", (appUser.getTdeeList()).get(appUser.getTdeeList().size()-1));
-                model.addAttribute("currentBmr", appUser.getBmr());
-                model.addAttribute("height", appUser.getHeight());
-                //model.addAttribute("weight", (appUser.getWeightList()).get(appUser.getWeightList().size()-1));
-                model.addAttribute("age", appUser.getAge());
-                model.addAttribute("gender", appUser.getGender());
-            }
+            var appUser = appUserRepository.findByUsername(username);
+            List<TdeeDto> tdeeList = appUser.getTdeeList()
+                    .stream()
+                    .map(tdee -> {
+                        return TdeeDto.builder()
+                                .value(tdee.getValue())
+                                .dateEntered(tdee.getDateEntered())
+                                .build();
+                    })
+                    .toList();
+            List<WeightDto> weightList = appUser.getWeightList()
+                    .stream()
+                    .map(weight -> {
+                        return WeightDto.builder()
+                                .value(weight.getValue())
+                                .dateEntered(weight.getDateEntered())
+                                .build();
+                    })
+                    .toList();
+            session.setAttribute("user", appUser);
+            model.addAttribute("username", appUser.getUsername());
+            model.addAttribute("tdee", tdeeList.get(tdeeList.size()-1).getValue());
+            model.addAttribute("currentBmr", appUser.getBmr());
+            model.addAttribute("height", appUser.getHeight());
+            model.addAttribute("weight", weightList.get(weightList.size()-1).getValue());
+            model.addAttribute("age", appUser.getAge());
+            model.addAttribute("gender", appUser.getGender());
         }
 
         return "userHomePage";
