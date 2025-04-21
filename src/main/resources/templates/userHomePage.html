@@ -7,22 +7,45 @@
 </head>
 <body>
     <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button type="submit">Log out</button>
     </form>
-
 
     Welcome, <span th:text="${username}"></span>!<br>
     Your stats:<br>
     Your current TDEE: <span th:text="${tdee}"></span><br>
     Your current BMR: <span th:text="${bmr}"></span><br>
-    Your height: <span th:text="${height}"></span><br>
-    Your current weight: <span th:text="${weight}"></span><br>
+    Your height: <span th:text="${height}"></span> cm<br>
+    Your current weight: <span th:text="${weight}"></span> kg<br>
     Your age: <span th:text="${age}"></span><br>
     Your gender: <span th:text="${gender}"></span><br>
 
+    Log new weight:<br>
+    <form th:action="@{/userHomePage/addWeight}" method="post">
+        Weight [kg]: <input type="text" id="weight" name="weight" pattern="\d*" required>
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit">Log weight</button>
+    </form><br>
 
+    <p th:if="${successNewWeight}">Logged new weight! Your TDEE is now: <span th:text="${newTdeeWeight}"></span></p><br>
 
+    Adjust average steps:<br>
+    <form th:action="@{/userHomePage/adjustSteps}" method="post">
+        Your average daily steps: <input type="number" id="steps" name="steps" required>
+        <br>
+        Your average pace (km/h): <select name="pace" id="pace">
+        <option value="3.2" selected>3.2 km/h</option>
+        <option value="4.8">4.8 km/h</option>
+        <option value="6.4">6.4 km/h</option>
+        <option value="8.0">8.0 km/h</option>
+    </select>
+        <br>
+        The average time (minutes) it takes you to reach this step count: <input type="number" id="time" name="time" step="any" required>
+        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit">Adjust steps</button>
+    </form><br>
 
+    <p th:if="${successNewSteps}">Adjusted your average step count! Your TDEE is now: <span th:text="${newTdeeSteps}"></span></p><br>
 
 </body>
 </html>
