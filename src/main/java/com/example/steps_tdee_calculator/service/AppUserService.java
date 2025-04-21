@@ -35,6 +35,8 @@ public class AppUserService {
     private TdeeRepository tdeeRepository;
     @Autowired
     private WeightRepository weightRepository;
+    @Autowired
+    private TdeeService tdeeService;
 
     public boolean verifyUser(String username, String password) {
         var userFromDb = appUserRepository.findByUsername(username);
@@ -119,6 +121,32 @@ public class AppUserService {
         }
     }
 
+    public void updateUserWeight(Long id, double weight) throws UserDoesNotExistException {
+        var user = appUserRepository.findById(id).orElse(null);
+        if (user != null) {
+            LocalDate currentDate = LocalDate.now();
+            Weight userWeight = new Weight.WeightBuilder()
+                    .setValue(weight)
+                    .setDateEntered(currentDate)
+                    .build();
+            Tdee userTdee = new Tdee.TdeeBuilder()
+                    .setValue(tdeeService
+                            .calculateTdee(user.getGender(), userWeight.getValue(), user.getHeight(), user.getAge()))
+                    .setDateEntered(currentDate)
+                    .build();
+            userWeight.setUser(user);
+            weightRepository.save(userWeight);
+            userTdee.setUser(user);
+            tdeeRepository.save(userTdee);
+            user.getWeightList().add(userWeight);
+            user.getTdeeList().add(userTdee);
+            appUserRepository.save(user);
+
+        } else {
+            throw new UserDoesNotExistException();
+        }
+    }
+
     private AppUserDto retrieveUserWithTdeeAndWeights(AppUser user) {
         List<TdeeDto> tdeeList = user.getTdeeList()
                 .stream()
@@ -148,6 +176,8 @@ public class AppUserService {
                 .gender(user.getGender())
                 .role(user.getRole()).build();
     }
+
+
 
 
 }
