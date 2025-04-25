@@ -73,8 +73,9 @@ public class UserHomePageController {
     }
 
     @PostMapping("/adjustSteps")
-    public String adjustSteps(Model model, @RequestParam int steps, @RequestParam double pace, @RequestParam int time, HttpSession session) {
-        System.out.println(steps + " " + pace + " " + time);
-        return "userHomePage";
+    public String adjustSteps(Model model, @RequestParam int steps, @RequestParam double pace, @RequestParam int time, HttpSession session) throws UserDoesNotExistException {
+        var appUser = (AppUser) session.getAttribute("user");
+        appUserService.updateUserTdeeWithSteps(appUser.getId(), steps, pace, time);
+        return "redirect:/userHomePage";
     }
 }
