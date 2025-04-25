@@ -129,9 +129,13 @@ public class AppUserService {
                     .setValue(weight)
                     .setDateEntered(currentDate)
                     .build();
+            double kcalFromSteps = user.getTdeeList().get(user.getTdeeList().size()-1).getKcalFromSteps();
             Tdee userTdee = new Tdee.TdeeBuilder()
                     .setValue(tdeeService
-                            .calculateTdee(user.getGender(), userWeight.getValue(), user.getHeight(), user.getAge()))
+                            .calculateTdee(user.getGender(), userWeight.getValue(),
+                                    user.getHeight(), user.getAge(),
+                                    kcalFromSteps))
+                    .setKcalFromSteps(kcalFromSteps)
                     .setDateEntered(currentDate)
                     .build();
             userWeight.setUser(user);
@@ -140,8 +144,32 @@ public class AppUserService {
             tdeeRepository.save(userTdee);
             user.getWeightList().add(userWeight);
             user.getTdeeList().add(userTdee);
+            user.setBmr(tdeeService.calculateBmr(user.getGender(), userWeight.getValue(), user.getHeight(), user.getAge()));
             appUserRepository.save(user);
+        } else {
+            throw new UserDoesNotExistException();
+        }
+    }
 
+    public void updateUserTdeeWithSteps(Long id, int steps, double pace, int time) throws UserDoesNotExistException {
+        var user = appUserRepository.findById(id).orElse(null);
+        if (user != null) {
+            LocalDate currentDate = LocalDate.now();
+            double weight = user.getWeightList().get(user.getWeightList().size()-1).getValue();
+            double kcalFromSteps = tdeeService.calculateKcalFromSteps(steps, pace, time, weight);
+            Tdee userTdee = new Tdee.TdeeBuilder()
+                    .setValue(tdeeService
+                            .calculateTdee(user.getGender(), weight,
+                                    user.getHeight(), user.getAge(),
+                                    kcalFromSteps))
+                    .setKcalFromSteps(kcalFromSteps)
+                    .setDateEntered(currentDate)
+                    .build();
+            userTdee.setUser(user);
+            tdeeRepository.save(userTdee);
+            user.getTdeeList().add(userTdee);
+            user.setBmr(tdeeService.calculateBmr(user.getGender(), weight, user.getHeight(), user.getAge()));
+            appUserRepository.save(user);
         } else {
             throw new UserDoesNotExistException();
         }

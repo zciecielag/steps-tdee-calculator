@@ -19,6 +19,8 @@ public class Tdee {
     @Column(nullable = false)
     private double value;
     @Column(nullable = false)
+    private double kcalFromSteps = 0;
+    @Column(nullable = false)
     private LocalDate dateEntered;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,6 +28,7 @@ public class Tdee {
 
     private Tdee(TdeeBuilder builder) {
         this.value = builder.value;
+        this.kcalFromSteps = builder.kcalFromSteps;
         this.dateEntered = builder.dateEntered;
         this.user = builder.user;
     }
@@ -34,11 +37,17 @@ public class Tdee {
     @NoArgsConstructor
     public static class TdeeBuilder {
         private double value;
+        private double kcalFromSteps;
         private LocalDate dateEntered;
         private AppUser user;
 
         public TdeeBuilder setValue(double value) {
             this.value = value;
+            return this;
+        }
+
+        public TdeeBuilder setKcalFromSteps(double kcalFromSteps) {
+            this.kcalFromSteps = kcalFromSteps;
             return this;
         }
 

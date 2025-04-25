@@ -27,8 +27,6 @@
         <button type="submit">Log weight</button>
     </form><br>
 
-    <p th:if="${successNewWeight}">Logged new weight! Your TDEE is now: <span th:text="${newTdeeWeight}"></span></p><br>
-
     Adjust average steps:<br>
     <form th:action="@{/userHomePage/adjustSteps}" method="post">
         Your average daily steps: <input type="number" id="steps" name="steps" required>
@@ -44,8 +42,6 @@
         <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button type="submit">Adjust steps</button>
     </form><br>
-
-    <p th:if="${successNewSteps}">Adjusted your average step count! Your TDEE is now: <span th:text="${newTdeeSteps}"></span></p><br>
 
 </body>
 </html>
