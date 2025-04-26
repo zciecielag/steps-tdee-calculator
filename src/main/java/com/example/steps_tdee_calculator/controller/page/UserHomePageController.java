@@ -41,6 +41,7 @@ public class UserHomePageController {
                         return TdeeDto.builder()
                                 .value(tdee.getValue())
                                 .dateEntered(tdee.getDateEntered())
+                                .kcalFromSteps(tdee.getKcalFromSteps())
                                 .build();
                     })
                     .toList();
