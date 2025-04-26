@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,7 +27,7 @@ public class AppUserController {
     @PostMapping("/addUser")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUser(@RequestBody AppUserRegisterDto appUserDto) throws UsernameExistsException {
-        userService.saveUser(appUserDto);
+        userService.saveUser(appUserDto, Optional.empty());
     }
     @GetMapping("/getById/{id}")
     public AppUserDto getUserById(@PathVariable Long id) throws UserDoesNotExistException {

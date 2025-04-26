@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -81,13 +82,22 @@ public class AppUserService {
         return result;
     }
 
-    public void saveUser(AppUserRegisterDto appUserDto) throws UsernameExistsException {
+    public void saveUser(AppUserRegisterDto appUserDto, Optional<Double> kcalFromSteps) throws UsernameExistsException {
         if (existsByUsername(appUserDto.getUsername())) {
             throw new UsernameExistsException();
         } else {
             LocalDate currentDate = LocalDate.now();
+            double kcalFromStepsValue = 0;
+            if (kcalFromSteps.isPresent()) {
+                kcalFromStepsValue = kcalFromSteps.get();
+            }
             Tdee userTdee = new Tdee.TdeeBuilder()
-                    .setValue(appUserDto.getCurrentTdee())
+                    .setValue(tdeeService.calculateTdee(
+                            appUserDto.getGender(), appUserDto.getCurrentWeight(),
+                            appUserDto.getHeight(), appUserDto.getAge(),
+                            kcalFromStepsValue
+                    ))
+                    .setKcalFromSteps(kcalFromStepsValue)
                     .setDateEntered(currentDate)
                     .build();
             Weight userWeight = new Weight.WeightBuilder()
@@ -98,17 +108,20 @@ public class AppUserService {
                     .setUsername(appUserDto.getUsername())
                     .setPassword(appUserDto.getPassword())
                     .setTdeeList(new ArrayList<Tdee>(Arrays.asList(userTdee)))
-                    .setBmr(appUserDto.getBmr())
+                    .setBmr(tdeeService.calculateBmr(
+                            appUserDto.getGender(), appUserDto.getCurrentWeight(),
+                            appUserDto.getHeight(), appUserDto.getAge()
+                    ))
                     .setHeight(appUserDto.getHeight())
                     .setWeightList(new ArrayList<Weight>(Arrays.asList(userWeight)))
                     .setAge(appUserDto.getAge())
                     .setGender(appUserDto.getGender())
                     .build();
-            appUserRepository.save(appUser);
-            userTdee.setUser(appUser);
-            tdeeRepository.save(userTdee);
             userWeight.setUser(appUser);
+            userTdee.setUser(appUser);
+            appUserRepository.save(appUser);
             weightRepository.save(userWeight);
+            tdeeRepository.save(userTdee);
         }
     }
 

@@ -12,5 +12,6 @@ import java.time.LocalDate;
 @Builder
 public class TdeeDto {
     private double value;
+    private double kcalFromSteps;
     private LocalDate dateEntered;
 }

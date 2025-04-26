@@ -15,9 +15,16 @@
         <br>
         Password (5 characters minimum): <input type="password" id="password" name="password" th:field="*{password}" minlength="5" required>
         <br>
-        Current TDEE: <input type="text" id="tdee" name="tdee" th:field="*{currentTdee}" pattern="\d*" required>
+        Your average daily steps: <input type="number" id="steps" name="steps" required>
         <br>
-        Current BMR: <input type="text" id="bmr" name="bmr" th:field="*{bmr}" pattern="\d*" required>
+        Your average pace (km/h): <select name="pace" id="pace">
+        <option value="3.2" selected>3.2 km/h</option>
+        <option value="4.8">4.8 km/h</option>
+        <option value="6.4">6.4 km/h</option>
+        <option value="8.0">8.0 km/h</option>
+        </select>
+        <br>
+        The average time (minutes) it takes you to reach this step count: <input type="number" id="time" name="time" step="any" required>
         <br>
         Height [cm]: <input type="text" id="height" name="height" th:field="*{height}" pattern="\d*" required>
         <br>
