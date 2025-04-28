@@ -1,15 +1,28 @@
 package com.example.steps_tdee_calculator.service;
 
+import com.example.steps_tdee_calculator.dto.TdeeChartDTO;
+import com.example.steps_tdee_calculator.entity.AppUser;
+import com.example.steps_tdee_calculator.entity.Tdee;
+import com.example.steps_tdee_calculator.exception.UserDoesNotExistException;
+import com.example.steps_tdee_calculator.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
 @Getter
 @Service
 public class TdeeService {
+
+    @Autowired
+    private AppUserRepository appUserRepository;
 
     public double calculateBmr(String gender, double weight, double height, int age) {
         // Mifflin St Jeor
@@ -42,6 +55,22 @@ public class TdeeService {
 
     public double calculateTdee(String gender, double weight, double height, int age, double kcalFromSteps) {
         return calculateBmr(gender, weight, height, age) + kcalFromSteps;
+    }
+
+    public TdeeChartDTO getTdeeChartData(Long userId) throws UserDoesNotExistException {
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new UserDoesNotExistException());
+
+        List<LocalDate> dates = new ArrayList<>();
+        List<Double> tdeeValues = new ArrayList<>();
+        List<Tdee> tdeeList = user.getTdeeList();
+
+        for (Tdee tdee : tdeeList) {
+            dates.add(tdee.getDateEntered());
+            tdeeValues.add(tdee.getValue());
+        }
+
+        return new TdeeChartDTO(dates, tdeeValues);
     }
 
 }

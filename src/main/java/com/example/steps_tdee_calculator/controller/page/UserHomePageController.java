@@ -1,17 +1,18 @@
 package com.example.steps_tdee_calculator.controller.page;
 
+import com.example.steps_tdee_calculator.dto.TdeeChartDTO;
 import com.example.steps_tdee_calculator.dto.TdeeDto;
 import com.example.steps_tdee_calculator.dto.WeightDto;
 import com.example.steps_tdee_calculator.entity.AppUser;
 import com.example.steps_tdee_calculator.exception.UserDoesNotExistException;
 import com.example.steps_tdee_calculator.repository.AppUserRepository;
 import com.example.steps_tdee_calculator.service.AppUserService;
+import com.example.steps_tdee_calculator.service.TdeeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,9 +29,11 @@ public class UserHomePageController {
     private AppUserRepository appUserRepository;
     @Autowired
     private AppUserService appUserService;
+    @Autowired
+    private TdeeService tdeeService;
 
     @GetMapping
-    public String userHomePage(Model model, HttpSession session) {
+    public String userHomePage(Model model, HttpSession session) throws UserDoesNotExistException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
@@ -62,6 +65,11 @@ public class UserHomePageController {
             model.addAttribute("weight", weightList.get(weightList.size()-1).getValue());
             model.addAttribute("age", appUser.getAge());
             model.addAttribute("gender", appUser.getGender());
+
+            TdeeChartDTO tdeeChartData = tdeeService.getTdeeChartData(appUser.getId());
+
+            model.addAttribute("datesData", tdeeChartData.getDates());
+            model.addAttribute("tdeesData", tdeeChartData.getTdeeValues());
         }
         return "userHomePage";
     }
