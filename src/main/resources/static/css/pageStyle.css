@@ -1,45 +1,122 @@
 body {
     background-color: #FFEBCD;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 h2 {
     font-size: 2.5em;
-    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1.2em;
 }
 
 .navigation {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    column-gap: 10px;
     position: sticky;
-    background-color: #FFE1B3;
-    padding: 20px;
     top: 0;
 }
 
+.navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 1em;
+  overflow: hidden;
+  background-color: #FFD79A;
+}
+
+.navigation li {
+    float: right;
+    border-left: 1px solid #FFAF34;
+}
+
+.navigation li:last-child {
+  border-left: none;
+}
+
+.navigation li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.navigation li a:hover {
+    background-color: #FFC367;
+}
+
 #description {
-    text-align: center;
-    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#description-text {
+    font-size: 1.2em;
+    text-align: justify;
+    background-color: #FFD79A;
+    border: 3px solid #FFAF34;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 800px;
+    width: 100%;
 }
 
 #calculator {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 #results {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
-button {
+button, input[type=submit] {
   background-color: #FFD79A;
   border: none;
   color: black;
-  padding: 15px 32px;
+  padding: 20px;
   text-align: center;
   font-size: 16px;
+  font-weight: bold;
   border-radius: 8px;
 }
+
+input[type=number] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #FFD79A;
+  border-radius: 8px;
+  -moz-appearance: textfield;
+}
+
+input[type=number]:focus {
+  border: 3px solid #FF9B01;
+  outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+form {
+  line-height: 2.5;
+}
+
+footer {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.3em;
+  padding: 3px;
+  background-color: #FFD79A;
+  color: black;
+}
+
