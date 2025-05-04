@@ -9,28 +9,34 @@
 </head>
 <body>
     <div class="navigation">
-        <button id="goToLoginButton" th:onclick="|window.location.href='/loginForm'|">Login</button><br>
-        <button id="goToRegisterButton" th:onclick="|window.location.href='/registerForm'|">Register</button><br>
+        <ul>
+            <li><a id="goToLoginButton" href="/loginForm">Login</a></li>
+            <li><a id="goToRegisterButton" href="/registerForm">Register</a></li>
+        </ul>
     </div>
-
+    <br>
     <div id="description">
-        <h2>TDEE tracker based on step count</h2>
-        <br>
-        This is a TDEE (Total Daily Energy Expenditure) calculator and tracker.<br>
-        It proposes an alternative way of using activity levels in the calculation.<br>
-        Instead of using vaguely defined activity categories such as Sedentary, Active etc., it attemps to provide an estimate based on your daily step count and pace.<br>
-        <br>
-        The equation is simple:<br>
-        Your TDEE = Your BMR (Basal Metabolic Rate - your energy at rest) + the calories burned from your average daily step count.<br>
-        <br>
-        WARNING! This calculator and equation are NOT approved by any medical professional and should ONLY be used as a very general reference.<br>
-        Please remember that your actual TDEE will very likely differ from the one suggested by this calculator.<br>
-        <br>
-        Please also note that this calculator will not suggest calorie intakes of less than 1200 calories.<br>
-        <br>
+        <div>
+            <h2>A TDEE tracker based on step count</h2>
+        </div>
+        <div id="description-text">
+            <br>
+            This is a TDEE (Total Daily Energy Expenditure) calculator and tracker.<br>
+            It proposes an alternative way of using activity levels in the calculation.<br>
+            Instead of using vaguely defined activity categories such as Sedentary, Active etc., it attemps to provide an estimate based on your daily step count and pace.<br>
+            <br>
+            The equation is simple:<br>
+            Your TDEE = Your BMR (Basal Metabolic Rate - your energy at rest) + the calories burned from your average daily step count.<br>
+            <br>
+            WARNING! This calculator and equation are NOT approved by any medical professional and should ONLY be used as a very general reference.<br>
+            Please remember that your actual TDEE will very likely differ from the one suggested by this calculator.<br>
+            <br>
+            Please also note that this calculator will not suggest calorie intakes of less than 1200 calories.<br>
+        </div>
     </div>
-
+    <br>
     <div id="calculator">
+        <h3>Enter your details below:</h3>
         <form name="calculateForm" onsubmit="calculate(event)">
             Your age: <input type="number" id="age" name="age" required>
             <br>
@@ -54,16 +60,25 @@
             </select>
             <br>
             The average time (minutes) it takes you to reach this step count: <input type="number" id="time" name="time" step="any" required>
+            <br>
             <input type="submit" value="Calculate">
         </form>
     </div>
-
+    <br>
     <div id="results">
+        <h3>Your calculated results:</h3>
+        <br>
         Your BMR (the calories you burn at rest): <p id="bmrResult">0</p><br>
         Your average calories burned at your step count and pace: <p id="stepResult">0</p><br>
         Your TDEE (the total calories you burn daily): <p id="tdeeResult">0</p><br>
         If you want to save this data and track your TDEE over time, please create an account: <button id="goToRegisterButton1" th:onclick="|window.location.href='/registerForm'|">Register</button><br>
     </div>
+
+    <br>
+
+    <footer>
+        <p>Author: zciecielag</p>
+    </footer>
 
 </body>
 </html>
