@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/src/main/resources/static/css/pageStyle.css">
+    <link th:href="@{/css/pageStyle.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/actions.js}"></script>
     <title>Login</title>
 </head>
 <body>
-<div class="loginForm">
-    <h2>Login:</h2>
-    <br>
-    <form th:action="@{/loginForm}" method="post">
-        Username: <input type="text" id="username" name="username" required>
+    <div class="loginForm">
+        <h2>Login:</h2>
         <br>
-        Password: <input type="password" id="password" name="password" required>
+        <form th:action="@{/loginForm}" method="post">
+            Username: <input type="text" id="username" name="username" required>
+            <br>
+            Password: <input type="password" id="password" name="password" required>
+            <br>
+            <br>
+            <input type="submit" value="Log in">
+            <p class="message" th:if="${errorText}" th:text="${errorText}"></p>
+            <br>
+        </form>
         <br>
-        <input type="submit" value="Log in">
-    </form>
+    </div>
+
     <br>
-    <p th:if="${errorText}" th:text="${errorText}"></p>
+    <div class="navigation-buttons">
+        <button type="button" th:onclick="|window.location.href='/registerForm'|">Create an account</button>
+        <br>
+        <button type="button" th:onclick="|window.location.href='/home'|">Go back</button>
+    </div>
+
     <br>
-    <button type="button" th:onclick="|window.location.href='/registerForm'|">Create an account</button>
-    <br>
-    <button type="button" th:onclick="|window.location.href='/home'|">Go back</button>
-</div>
+
+    <footer id="login-footer">
+        <p>Author: zciecielag</p>
+    </footer>
+
 </body>
 </html>
