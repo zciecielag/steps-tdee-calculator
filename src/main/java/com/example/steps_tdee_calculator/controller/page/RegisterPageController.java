@@ -1,6 +1,5 @@
 package com.example.steps_tdee_calculator.controller.page;
 
-import com.example.steps_tdee_calculator.dto.AppUserDto;
 import com.example.steps_tdee_calculator.dto.AppUserRegisterDto;
 import com.example.steps_tdee_calculator.exception.UsernameExistsException;
 import com.example.steps_tdee_calculator.service.AppUserService;
@@ -27,8 +26,44 @@ public class RegisterPageController {
     private TdeeService tdeeService;
 
     @GetMapping("/registerForm")
-    public String registerForm(Model model) {
-        model.addAttribute("newUser", new AppUserRegisterDto());
+    public String registerForm(Model model,
+                               @RequestParam(required = false) Integer age,
+                               @RequestParam(required = false) String gender,
+                               @RequestParam(required = false) Double weight,
+                               @RequestParam(required = false) Double height,
+                               @RequestParam(required = false) Integer steps,
+                               @RequestParam(required = false) Double pace,
+                               @RequestParam(required = false) Integer time) {
+        AppUserRegisterDto newUser = new AppUserRegisterDto();
+
+        if (age != null) {
+            newUser.setAge(age);
+        }
+
+        if (gender != null) {
+            if (gender.equalsIgnoreCase("female")) {
+                newUser.setGender("F");
+            } else if (gender.equalsIgnoreCase("male")) {
+                newUser.setGender("M");
+            } else {
+                newUser.setGender(gender);
+            }
+        }
+
+        if (weight != null) {
+            newUser.setCurrentWeight(weight);
+        }
+
+        if (height != null) {
+            newUser.setHeight(height);
+        }
+
+        model.addAttribute("steps", steps);
+        model.addAttribute("pace", pace);
+        model.addAttribute("time", time);
+
+        model.addAttribute("newUser", newUser);
+
         return "registerPage";
     }
 

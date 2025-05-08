@@ -16,16 +16,18 @@
             <br>
             Password (5 characters minimum): <input type="password" id="password" name="password" th:field="*{password}" minlength="5" required>
             <br>
-            Your average daily steps: <input type="number" id="steps" name="steps" required>
+            Your average daily steps: <input type="number" id="steps" name="steps" th:value="${steps}" required>
             <br>
-            Your average pace (km/h): <select name="pace" id="pace">
-            <option value="3.2" selected>3.2 km/h</option>
-            <option value="4.8">4.8 km/h</option>
-            <option value="6.4">6.4 km/h</option>
-            <option value="8.0">8.0 km/h</option>
-        </select>
+            Your average pace (km/h):
+            <select name="pace" id="pace">
+                <option value="3.2">3.2 km/h</option>
+                <option value="4.8">4.8 km/h</option>
+                <option value="6.4">6.4 km/h</option>
+                <option value="8.0">8.0 km/h</option>
+            </select>
             <br>
-            The average time (minutes) it takes you to reach this step count: <input type="number" id="time" name="time" step="any" required>
+            The average time (minutes) it takes you to reach this step count:
+            <input type="number" id="time" name="time" step="any" th:value="${time}" required>
             <br>
             Height [cm]: <input type="text" id="height" name="height" th:field="*{height}" pattern="\d*" required>
             <br>

@@ -60,7 +60,7 @@
             <br>
             The average time (minutes) it takes you to reach this step count: <input type="number" id="time" name="time" step="any" required>
             <br>
-            <input type="submit" value="Calculate">
+            <button type="submit">Calculate</button>
         </form>
     </div>
     <br>
@@ -70,7 +70,9 @@
         Your BMR (the calories you burn at rest): <p class="calculator-result" id="bmrResult">0</p><br>
         Your average calories burned at your step count and pace: <p class="calculator-result" id="stepResult">0</p><br>
         Your TDEE (the total calories you burn daily): <p class="calculator-result" id="tdeeResult">0</p><br>
-        If you want to save this data and track your TDEE over time, please create an account: <button id="goToRegisterButton1" th:onclick="|window.location.href='/registerForm'|">Register</button><br>
+        If you want to save this data and track your TDEE over time, please create an account:
+        <button id="goToRegisterButton1" onclick="redirectToRegisterWithValues()">Register</button><br>
+<!--        <button id="goToRegisterButton1" th:onclick="|window.location.href='/registerForm'|">Register</button><br>-->
     </div>
 
     <br>
