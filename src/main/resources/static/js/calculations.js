@@ -24,6 +24,8 @@ function calculate(event) {
     bmrResultElement.textContent = bmr.toFixed(2);
     stepCalorieBurnResultElement.textContent = stepsBurn.toFixed(2);
     tdeeResultElement.textContent = tdee.toFixed(2);
+
+    alert("OK");
 }
 
 function calculateBMR(gender, weight, height, age) {
@@ -61,4 +63,29 @@ function calculateStepCalorieBurn(paceToMET, steps, time, weight) {
     }
 
     return ((0.0175*paceToMET*weight*time)/10000)*steps;
+}
+
+function redirectToRegisterWithValues() {
+    let weight = document.forms["calculateForm"]["weight"].value;
+    let height = document.forms["calculateForm"]["height"].value;
+    let age = document.forms["calculateForm"]["age"].value;
+    let gender = document.forms["calculateForm"]["gender"].value;
+    let paceToMET = document.forms["calculateForm"]["pace"].value;
+    let steps = document.forms["calculateForm"]["steps"].value;
+    let time = document.forms["calculateForm"]["time"].value;
+
+    let url = new URL("http://localhost:8080/registerForm")
+    const urlParams = new URLSearchParams(url.search);
+
+    urlParams.set('weight', weight);
+    urlParams.set('height', height);
+    urlParams.set('age', age);
+    urlParams.set('gender', gender);
+    urlParams.set('pace', paceToMET);
+    urlParams.set('steps', steps);
+    urlParams.set('time', time);
+
+    url.search = urlParams;
+
+    window.location.href = url;
 }
