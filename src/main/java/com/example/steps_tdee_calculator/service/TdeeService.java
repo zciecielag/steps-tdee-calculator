@@ -59,7 +59,7 @@ public class TdeeService {
 
     public TdeeChartDTO getTdeeChartData(Long userId) throws UserDoesNotExistException {
         AppUser user = appUserRepository.findById(userId)
-                .orElseThrow(() -> new UserDoesNotExistException());
+                .orElseThrow(UserDoesNotExistException::new);
 
         List<LocalDate> dates = new ArrayList<>();
         List<Double> tdeeValues = new ArrayList<>();
