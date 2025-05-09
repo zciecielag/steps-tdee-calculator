@@ -2,12 +2,14 @@ package com.example.steps_tdee_calculator.controller.page;
 
 import com.example.steps_tdee_calculator.dto.TdeeChartDTO;
 import com.example.steps_tdee_calculator.dto.TdeeDto;
+import com.example.steps_tdee_calculator.dto.WeightChartDTO;
 import com.example.steps_tdee_calculator.dto.WeightDto;
 import com.example.steps_tdee_calculator.entity.AppUser;
 import com.example.steps_tdee_calculator.exception.UserDoesNotExistException;
 import com.example.steps_tdee_calculator.repository.AppUserRepository;
 import com.example.steps_tdee_calculator.service.AppUserService;
 import com.example.steps_tdee_calculator.service.TdeeService;
+import com.example.steps_tdee_calculator.service.WeightService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,6 +33,8 @@ public class UserHomePageController {
     private AppUserService appUserService;
     @Autowired
     private TdeeService tdeeService;
+    @Autowired
+    private WeightService weightService;
 
     @GetMapping
     public String userHomePage(Model model, HttpSession session) throws UserDoesNotExistException {
@@ -67,9 +71,12 @@ public class UserHomePageController {
             model.addAttribute("gender", appUser.getGender());
 
             TdeeChartDTO tdeeChartData = tdeeService.getTdeeChartData(appUser.getId());
+            WeightChartDTO weightChartDTO = weightService.getWeightChartData(appUser.getId());
 
-            model.addAttribute("datesData", tdeeChartData.getDates());
+            model.addAttribute("datesTdeeData", tdeeChartData.getDates());
             model.addAttribute("tdeesData", tdeeChartData.getTdeeValues());
+            model.addAttribute("datesWeightData", weightChartDTO.getDates());
+            model.addAttribute("weightsData", weightChartDTO.getWeightValues());
         }
         return "userHomePage";
     }

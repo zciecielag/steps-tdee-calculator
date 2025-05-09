@@ -160,6 +160,20 @@ form {
     row-gap: 10px;
 }
 
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+#tdee_chart, #weight_chart {
+  text-align: center;
+  border: 20px solid #FFD79A;
+  border-radius: 8px;
+}
+
 footer {
     text-align: center;
     font-weight: bold;
