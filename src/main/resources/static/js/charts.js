@@ -25,7 +25,7 @@ function drawTDEEChart() {
             width: '80%',
             height: '70%'
         },
-        curveType: 'function',
+        curveType: 'none',
         legend: { position: 'bottom', textStyle: { fontSize: 12 } },
         colors: ['#FF7767'],
         backgroundColor: '#FFEBCD',
@@ -39,8 +39,8 @@ function drawTDEEChart() {
             titleTextStyle: { italic: false, bold: true, fontSize: 14 },
             textStyle: { fontSize: 12 },
             viewWindow: {
-                max: 3500,
-                min: 1000
+                max: Math.max(...tdees) + 200,
+                min: Math.min(...tdees) - 200
             }
         },
         lineWidth: 3,
@@ -72,7 +72,7 @@ function drawWeightChart() {
             width: '80%',
             height: '70%'
         },
-        curveType: 'function',
+        curveType: 'none',
         legend: { position: 'bottom', textStyle: { fontSize: 12 } },
         colors: ['#FF7767'],
         backgroundColor: '#FFEBCD',
@@ -86,8 +86,8 @@ function drawWeightChart() {
             titleTextStyle: { italic: false, bold: true, fontSize: 14 },
             textStyle: { fontSize: 12 },
             viewWindow: {
-                max: 150,
-                min: 40
+                max: Math.max(...weights) + 5,
+                min: Math.min(...weights) - 5
             }
         },
         lineWidth: 3,

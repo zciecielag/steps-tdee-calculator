@@ -23,6 +23,7 @@ h4 {
 
 .navigation {
     position: sticky;
+    z-index: 1000;
     top: 0;
 }
 
