@@ -1,10 +1,13 @@
 package com.example.steps_tdee_calculator.service;
 
+import com.example.steps_tdee_calculator.dto.AppUserDto;
 import com.example.steps_tdee_calculator.dto.TdeeChartDTO;
+import com.example.steps_tdee_calculator.dto.TdeeDto;
 import com.example.steps_tdee_calculator.entity.AppUser;
 import com.example.steps_tdee_calculator.entity.Tdee;
 import com.example.steps_tdee_calculator.exception.UserDoesNotExistException;
 import com.example.steps_tdee_calculator.repository.AppUserRepository;
+import com.example.steps_tdee_calculator.repository.TdeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,35 @@ public class TdeeService {
 
     @Autowired
     private AppUserRepository appUserRepository;
+    @Autowired
+    private TdeeRepository tdeeRepository;
+
+    public List<TdeeDto> getAllTdees() {
+        var tdees = tdeeRepository.findAll();
+        List<TdeeDto> result = new ArrayList<>();
+        for (Tdee tdee : tdees) {
+            result.add(TdeeDto.builder()
+                    .value(tdee.getValue())
+                    .kcalFromSteps(tdee.getKcalFromSteps())
+                    .dateEntered(tdee.getDateEntered())
+                    .build());
+        }
+        return result;
+    }
+
+    public List<TdeeDto> getTdeesByUserId(Long userId) throws UserDoesNotExistException {
+        var user = appUserRepository.findById(userId)
+                .orElseThrow(UserDoesNotExistException::new);
+        List<TdeeDto> result = new ArrayList<>();
+        for (Tdee tdee : user.getTdeeList()) {
+            result.add(TdeeDto.builder()
+                    .value(tdee.getValue())
+                    .kcalFromSteps(tdee.getKcalFromSteps())
+                    .dateEntered(tdee.getDateEntered())
+                    .build());
+        }
+        return result;
+    }
 
     public double calculateBmr(String gender, double weight, double height, int age) {
         // Mifflin St Jeor
