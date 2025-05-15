@@ -29,6 +29,7 @@ public class AppUserController {
     public void saveUser(@RequestBody AppUserRegisterDto appUserDto) throws UsernameExistsException {
         userService.saveUser(appUserDto, Optional.empty());
     }
+
     @GetMapping("/getById/{id}")
     public AppUserDto getUserById(@PathVariable Long id) throws UserDoesNotExistException {
         return userService.getUserById(id);
