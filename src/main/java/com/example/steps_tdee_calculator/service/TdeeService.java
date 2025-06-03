@@ -1,6 +1,5 @@
 package com.example.steps_tdee_calculator.service;
 
-import com.example.steps_tdee_calculator.dto.AppUserDto;
 import com.example.steps_tdee_calculator.dto.TdeeChartDTO;
 import com.example.steps_tdee_calculator.dto.TdeeDto;
 import com.example.steps_tdee_calculator.entity.AppUser;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

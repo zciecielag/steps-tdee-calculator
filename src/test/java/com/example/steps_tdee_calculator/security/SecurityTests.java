@@ -8,7 +8,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -22,6 +21,12 @@ public class SecurityTests {
     @WithMockUser(username = "user", roles = {"USER"})
     public void testIfDeniedUserAccessToApi() throws Exception {
         mockMvc.perform(post("/api/users/getAll"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testIfDeniedAccessToUserHomePageWhenAnonymous() throws Exception {
+        mockMvc.perform(post("/userHomePage"))
                 .andExpect(status().isForbidden());
     }
 }
