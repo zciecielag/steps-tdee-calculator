@@ -15,7 +15,6 @@ import com.example.steps_tdee_calculator.repository.WeightRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 @AllArgsConstructor
 @Getter
 @Service
@@ -82,22 +79,18 @@ public class AppUserService {
         return result;
     }
 
-    public void saveUser(AppUserRegisterDto appUserDto, Optional<Double> kcalFromSteps) throws UsernameExistsException {
+    public void saveUser(AppUserRegisterDto appUserDto, double kcalFromSteps) throws UsernameExistsException {
         if (existsByUsername(appUserDto.getUsername())) {
             throw new UsernameExistsException();
         } else {
             LocalDate currentDate = LocalDate.now();
-            double kcalFromStepsValue = 0;
-            if (kcalFromSteps.isPresent()) {
-                kcalFromStepsValue = kcalFromSteps.get();
-            }
             Tdee userTdee = new Tdee.TdeeBuilder()
                     .setValue(tdeeService.calculateTdee(
                             appUserDto.getGender(), appUserDto.getCurrentWeight(),
                             appUserDto.getHeight(), appUserDto.getAge(),
-                            kcalFromStepsValue
+                            kcalFromSteps
                     ))
-                    .setKcalFromSteps(kcalFromStepsValue)
+                    .setKcalFromSteps(kcalFromSteps)
                     .setDateEntered(currentDate)
                     .build();
             Weight userWeight = new Weight.WeightBuilder()
@@ -217,8 +210,6 @@ public class AppUserService {
                 .gender(user.getGender())
                 .role(user.getRole()).build();
     }
-
-
 
 
 }

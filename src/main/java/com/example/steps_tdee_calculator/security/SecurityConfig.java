@@ -52,7 +52,6 @@ public class SecurityConfig {
                                 .sessionFixation().migrateSession()
                                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                                 .maximumSessions(1)
-                                .expiredUrl("/sessionExpired")
                 )
                 .build();
     }

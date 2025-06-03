@@ -27,7 +27,7 @@ public class AppUserController {
     @PostMapping("/addUser")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUser(@RequestBody AppUserRegisterDto appUserDto) throws UsernameExistsException {
-        userService.saveUser(appUserDto, Optional.empty());
+        userService.saveUser(appUserDto, 0);
     }
 
     @GetMapping("/getById/{id}")

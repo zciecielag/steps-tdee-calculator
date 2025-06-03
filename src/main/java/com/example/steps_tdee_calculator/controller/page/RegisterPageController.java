@@ -74,7 +74,7 @@ public class RegisterPageController {
         try {
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             double kcalFromSteps = tdeeService.calculateKcalFromSteps(steps, pace, time, newUser.getCurrentWeight());
-            userService.saveUser(newUser, Optional.of(kcalFromSteps));
+            userService.saveUser(newUser, kcalFromSteps);
             model.addAttribute("successText", true);
         } catch (UsernameExistsException usernameExistsException) {
             model.addAttribute("errorText", "A user with this username already exists.");
